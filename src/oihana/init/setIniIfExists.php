@@ -22,7 +22,7 @@ use oihana\reflect\exceptions\ConstantException;
  * @param array|string|int|float|bool|null $init A config array (looked up by $key) or a direct scalar value.
  * @return bool True if ini_set() was called, false otherwise.
  *
- * @throws ConstantException
+ * @throws ConstantException If `$key` is not a valid `IniOptions` directive.
  * @see ini_get()
  * @link https://www.php.net/manual/en/function.ini-set.php PHP manual: ini_set
  *

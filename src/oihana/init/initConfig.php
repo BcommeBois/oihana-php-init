@@ -22,7 +22,7 @@ use function oihana\files\toml\resolveTomlConfig;
  *
  * @return array The config array definition.
  *
- * @throws TomlError
+ * @throws TomlError If the configuration file exists but contains invalid TOML.
  */
 function initConfig( string $basePath = Char::EMPTY , string $file = 'config.toml' , ?callable $init = null ) : array
 {

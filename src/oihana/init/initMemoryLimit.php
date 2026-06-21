@@ -16,7 +16,7 @@ use oihana\reflect\exceptions\ConstantException;
  *
  * @return bool True if the ini setting was successfully set, false otherwise.
  *
- * @throws ConstantException
+ * @throws ConstantException If the `memory_limit` key is not a valid `IniOptions` directive.
  *
  * @example
  * ```php

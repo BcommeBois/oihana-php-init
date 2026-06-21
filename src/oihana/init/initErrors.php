@@ -23,7 +23,7 @@ use oihana\reflect\exceptions\ConstantException;
  *
  * @return void
  *
- * @throws ConstantException
+ * @throws ConstantException If one of the provided keys is not a valid `IniOptions` directive.
  *
  * @see IniOptions
  */
