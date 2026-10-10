@@ -8,7 +8,7 @@ de définitions.
 ## `initDefinitions()`
 
 ```php
-function initDefinitions( string $basePath ) : array
+function initDefinitions( string $basePath , bool $recursive = true ) : array
 ```
 
 Scanne récursivement `$basePath` à la recherche de fichiers `.php`, fait un
@@ -18,6 +18,13 @@ définitions. Chaque fichier doit **retourner un tableau** de définitions PHP-D
 | Paramètre | Rôle |
 |---|---|
 | `$basePath` | Répertoire racine contenant les fichiers de définitions `.php` (recherche récursive). |
+| `$recursive` | `true` (défaut) fusionne les tableaux en profondeur : quand deux fichiers portent la même clé et que les deux valeurs sont des tableaux, ils sont fusionnés clé par clé. `false` fusionne à plat : la valeur du dernier fichier gagne, quel que soit son type. |
+
+La fusion à plat est la bonne pour des définitions de conteneur : une clé est
+une entrée, et la dernière définition d'une entrée remplace la précédente,
+exactement comme PHP-DI le fait avec plusieurs sources. Elle est aussi bien
+moins coûteuse sur un grand arbre de définitions, puisqu'une fusion profonde
+recopie tout le tableau accumulé à chaque fichier.
 
 Retourne le tableau de définitions fusionné. Lève `Exception` si un fichier ne
 peut pas être lu/inclus ou si la fusion échoue.
@@ -27,6 +34,9 @@ use function oihana\init\initDefinitions;
 
 // Fusionne tous les fichiers de définitions *.php sous le dossier 'definitions'
 $definitions = initDefinitions( __DIR__ . '/definitions' );
+
+// La même chose, à plat : la dernière définition d'une entrée gagne
+$definitions = initDefinitions( __DIR__ . '/definitions' , recursive : false );
 ```
 
 Un fichier de définitions retourne simplement un tableau :

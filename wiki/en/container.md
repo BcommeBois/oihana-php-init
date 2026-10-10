@@ -7,7 +7,7 @@ Two functions cooperate to build a [PHP-DI](https://php-di.org/) container:
 ## `initDefinitions()`
 
 ```php
-function initDefinitions( string $basePath ) : array
+function initDefinitions( string $basePath , bool $recursive = true ) : array
 ```
 
 Recursively scans `$basePath` for `.php` files, `require`s each one, and merges
@@ -17,6 +17,12 @@ array** of PHP-DI definitions.
 | Parameter | Role |
 |---|---|
 | `$basePath` | Root directory containing the `.php` definition files (searched recursively). |
+| `$recursive` | `true` (default) merges the arrays deeply : when two files carry the same key and both values are arrays, they are merged key by key. `false` merges them flat : the value of the last file wins, whatever its type. |
+
+A flat merge is the right one for container definitions : a key is an entry,
+and the last definition of an entry replaces the previous one, exactly as PHP-DI
+does with several sources. It is also far cheaper on a large definitions tree,
+since a deep merge copies the whole accumulated array at every file.
 
 Returns the merged definitions array. Throws `Exception` if a file cannot be
 read/included or if merging fails.
@@ -26,6 +32,9 @@ use function oihana\init\initDefinitions;
 
 // Merge every *.php definition file under the 'definitions' directory
 $definitions = initDefinitions( __DIR__ . '/definitions' );
+
+// The same, merged flat : the last definition of an entry wins
+$definitions = initDefinitions( __DIR__ . '/definitions' , recursive : false );
 ```
 
 A definition file simply returns an array:

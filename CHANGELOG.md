@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-10-10
+
+### Added
+- `initDefinitions()` takes a `$recursive` parameter, forwarded to
+  `requireAndMergeArrays()`. `true`, the default, keeps the deep merge ; `false`
+  merges the definition files flat, the last value of a key winning whatever its
+  type. A flat merge is what container definitions call for, and it spares the
+  copy of the whole accumulated array that a deep merge makes at every file.
+
 ## [1.0.0] - 2026-06-21
 
 First release. The `oihana\init` namespace is extracted from
